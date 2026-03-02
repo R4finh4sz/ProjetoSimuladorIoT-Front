@@ -1,47 +1,23 @@
-import React, { useRef, useState } from "react";
+import { useRef } from "react";
 import Draggable from "react-draggable";
 import ButtonDevice from "./devices/ButtonDevice";
 import LEDArrayDevice from "./devices/LEDArrayDevice";
-
-const ZONE_LEDS = {
-  dark: [
-    { id: 0, color: "red" },
-    { id: 1, color: "off" },
-    { id: 2, color: "off" },
-  ],
-  medium: [
-    { id: 0, color: "off" },
-    { id: 1, color: "yellow" },
-    { id: 2, color: "off" },
-  ],
-  high: [
-    { id: 0, color: "off" },
-    { id: 1, color: "off" },
-    { id: 2, color: "green" },
-  ],
-};
+import { ZONE_LEDS } from "../constants";
 
 export default function Mesa({
   id,
   label = "mesa",
   devices = [],
   ldrZone = "dark",
-  onDeviceEvent,
+  relayOn = false,
+  onButtonToggle,
 }) {
   const nodeRef = useRef(null);
-  const [buttonOn, setButtonOn] = useState(false);
 
   const zoneLeds = ZONE_LEDS[ldrZone] || ZONE_LEDS.dark;
 
   const handleToggle = (devId, newState) => {
-    setButtonOn(newState);
-    onDeviceEvent &&
-      onDeviceEvent({
-        mesaId: id,
-        deviceId: devId,
-        type: "button",
-        state: newState,
-      });
+    onButtonToggle && onButtonToggle(devId, newState);
   };
 
   return (
@@ -83,7 +59,7 @@ export default function Mesa({
                   key={device.id}
                   id={device.id}
                   label={device.label}
-                  toggled={buttonOn}
+                  toggled={relayOn}
                   onToggle={handleToggle}
                 />
               );
@@ -95,17 +71,7 @@ export default function Mesa({
                   id={device.id}
                   label={device.label}
                   leds={zoneLeds}
-                  powered={buttonOn}
-                  onLedChange={(devId, ledId, color) =>
-                    onDeviceEvent &&
-                    onDeviceEvent({
-                      mesaId: id,
-                      deviceId: devId,
-                      ledId,
-                      type: "led",
-                      color,
-                    })
-                  }
+                  powered={relayOn}
                 />
               );
             }

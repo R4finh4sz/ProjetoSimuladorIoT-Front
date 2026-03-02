@@ -1,5 +1,3 @@
-import React from "react";
-
 const LED_COLORS = {
   off: { body: "#9e9e9e", glow: "none", label: "off" },
   red: {
@@ -40,7 +38,6 @@ function LED({ color = "off", powered = true, onClick }) {
         height: "40px",
       }}
     >
-      {/* LED body (dome shape) */}
       <div
         style={{
           width: "26px",
@@ -54,7 +51,7 @@ function LED({ color = "off", powered = true, onClick }) {
           filter: powered ? "none" : "grayscale(80%) brightness(0.4)",
         }}
       />
-      {/* LED base */}
+
       <div
         style={{
           position: "absolute",
@@ -76,8 +73,6 @@ const DEFAULT_LEDS = [
   { id: 2, color: "green" },
 ];
 
-// Fully controlled: leds come from parent (backend-driven).
-// powered=false dims all LEDs to show they are off.
 export default function LEDArrayDevice({
   id,
   label = "Linha 1",
@@ -92,7 +87,6 @@ export default function LEDArrayDevice({
       style={{ top: "20px", right: "20px" }}
     >
       <div className="flex flex-col items-center gap-1">
-        {/* LED array body */}
         <div
           className="flex items-end gap-1 px-3 pt-2 pb-1 rounded-2xl"
           style={{
@@ -106,7 +100,7 @@ export default function LEDArrayDevice({
             <LED key={led.id} color={led.color} powered={powered} />
           ))}
         </div>
-        {/* Label */}
+
         <span
           className="text-xs font-medium"
           style={{ color: powered ? "#fff" : "#888" }}

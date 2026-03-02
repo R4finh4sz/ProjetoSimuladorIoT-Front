@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function ButtonDevice({
   id,
-  label = "butão",
+  label = "botão",
   toggled = false,
   onToggle,
 }) {
@@ -15,7 +15,6 @@ export default function ButtonDevice({
   return (
     <div className="absolute select-none" style={{ top: "20px", left: "20px" }}>
       <div className="flex flex-col items-center gap-1">
-        {/* Button device body */}
         <div
           className="flex items-center justify-center rounded-xl"
           style={{
@@ -45,7 +44,6 @@ export default function ButtonDevice({
             }}
           />
         </div>
-        {/* Label */}
         <span className="text-xs font-medium" style={{ color: "#fff" }}>
           {label}
         </span>
